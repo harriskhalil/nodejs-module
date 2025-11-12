@@ -20,6 +20,10 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalGuards(app.get(AuthGuard));
+  app.enableCors({
+    origin:process.env.FRONT_END_URL,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  });
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap().catch((err) => {
